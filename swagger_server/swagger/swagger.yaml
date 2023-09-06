@@ -1,0 +1,243 @@
+openapi: 3.0.0
+info:
+  title: Simple Anagram API
+  version: 0.12.6.dev2+gd9238832
+servers:
+- url: http://localhost:8000/api/v1/
+  description: Local development environment
+paths:
+  /version:
+    get:
+      tags:
+      - version
+      summary: Return API version.
+      description: ""
+      operationId: version_get
+      responses:
+        "200":
+          description: Version information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              example:
+                version: 0.1.0
+                python_version: '3.9.0 '
+      security: []
+      x-openapi-router-controller: controllers.version_controller
+  /swagger.json:
+    get:
+      tags:
+      - swagger
+      summary: Show machine-readable API documentation.
+      description: Swagger documentation of API endpoints.
+      operationId: swagger_json_get
+      responses:
+        "200":
+          description: |
+            [OpenAPI](https://swagger.io/specification/) document describing the Simple angram service API in JSON format
+      security: []
+      x-openapi-router-controller: controllers.swagger_controller
+  /anagrams/{word}:
+    get:
+      tags:
+      - anagrams
+      summary: Takes a JSON array of English-language words and adds them to the corpus.
+      description: |
+        Returns a JSON array of English-language words that are anagrams of the word passed in the URL.
+      operationId: anagrams_word_get
+      parameters:
+      - name: word
+        in: path
+        description: English languate word
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: dare
+      responses:
+        "200":
+          description: report access entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/anagram_list'
+        "404":
+          description: word not found in corpus
+          content:
+            application/json:
+              example:
+                message: Not found
+                error_code: NotFound
+      security: []
+      x-openapi-router-controller: controllers.anagrams_controller
+  /words/word:
+    delete:
+      tags:
+      - corpus
+      summary: Delete a single word from the corpus.
+      description: ""
+      operationId: words_word_delete
+      parameters:
+      - name: single_word
+        in: path
+        description: English languate word
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: dare
+      responses:
+        "204":
+          description: delete successful
+          content:
+            application/json:
+              schema:
+                properties: {}
+                example: {}
+                x-content-type: application/json
+        "404":
+          description: word not found in corpus
+          content:
+            application/json:
+              example:
+                message: Not found
+                error_code: NotFound
+      security: []
+      x-openapi-router-controller: controllers.corpus_controller
+  /words:
+    post:
+      tags:
+      - corpus
+      summary: Add English-language words to the corpus.
+      description: Takes a JSON array of English-language words and adds them to the
+        corpus.
+      operationId: words_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/word_list'
+      responses:
+        "201":
+          description: the newly created report access entry
+          content:
+            application/json:
+              schema:
+                x-content-type: application/json
+        "400":
+          description: bad request
+          content:
+            application/json:
+              example:
+                message: Input validation failed
+                error_code: InputValidationFailed
+      security: []
+      x-openapi-router-controller: controllers.corpus_controller
+    delete:
+      tags:
+      - corpus
+      summary: Delete all words in the corpus.
+      description: ""
+      operationId: words_delete
+      responses:
+        "200":
+          description: delete successful
+          content:
+            application/json:
+              schema:
+                properties: {}
+                example: {}
+                x-content-type: application/json
+        "404":
+          description: word not found in corpus
+          content:
+            application/json:
+              example:
+                message: Not found
+                error_code: NotFound
+      security: []
+      x-openapi-router-controller: controllers.corpus_controller
+components:
+  schemas:
+    anagram_list:
+      type: object
+      properties:
+        anagrams:
+          maxItems: 100
+          minItems: 0
+          type: array
+          description: array or anagrams
+          nullable: true
+          example:
+          - dare
+          - dear
+          items:
+            type: string
+            example: "[\"dare\",\"dear\"]"
+      example:
+        anagrams:
+        - dare
+        - dear
+    word_list:
+      type: object
+      properties:
+        words:
+          type: array
+          description: array or words
+          nullable: true
+          example:
+          - dare
+          - dear
+          items:
+            type: string
+            example: "[\"dare\",\"dear\"]"
+    inline_response_200:
+      properties:
+        version:
+          type: string
+          description: |
+            Simple anagram-API version number
+        python_version:
+          type: string
+          description: "Python interpreter version, as returned by `sys.version`"
+      example:
+        python_version: python_version
+        version: version
+  responses:
+    bad_request:
+      description: bad request
+      content:
+        application/json:
+          example:
+            message: Input validation failed
+            error_code: InputValidationFailed
+    not_found:
+      description: word not found in corpus
+      content:
+        application/json:
+          example:
+            message: Not found
+            error_code: NotFound
+    delete_successful:
+      description: delete successful
+      content:
+        application/json:
+          schema:
+            properties: {}
+            example: {}
+            x-content-type: application/json
+  parameters:
+    word:
+      name: word
+      in: path
+      description: English languate word
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+      example: dare
+

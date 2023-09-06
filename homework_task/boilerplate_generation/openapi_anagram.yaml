@@ -1,0 +1,241 @@
+
+"openapi": "3.0.0"
+"info":
+  "title": "Simple Anagram API"
+  "version": "0.12.6.dev2+gd9238832"
+"servers":
+  -
+    "url": "http://localhost:8000/api/v1/"
+    "description": "Local development environment"
+"components":
+  "parameters":
+    "single_word":
+      "name": "single_word"
+      "in": "path"
+      "schema":
+        "type": "string"
+      "required": true
+      "description": "English languate word"
+      "example": "dare"
+  "responses":
+    "bad_request":
+      "description": "bad request"
+      "content":
+        "application/json":
+          "example":
+            "message": "Input validation failed"
+            "error_code": "InputValidationFailed"
+    "not_found":
+      "description": "word not found in corpus"
+      "content":
+        "application/json":
+          "example":
+            "message": "Not found"
+            "error_code": "NotFound"
+    "delete_successful":
+      "description": "delete successful"
+      "content":
+        "application/json":
+          "schema":
+            "properties": {}
+  "schemas":
+    "anagram_list":
+      "type": "object"
+      "properties":
+        "anagrams":
+          "type": "array"
+          "nullable": true
+          "minItems": 0
+          "maxItems": 100
+          "description": "array or anagrams"
+          "items":
+            "type": "string"
+            "example":
+              - "dare"
+              - "dear"
+          "example":
+            - "dare"
+            - "dear"
+    "word_list":
+      "type": "object"
+      "properties":
+        "words":
+          "type": "array"
+          "nullable": true
+          "description": "array or words"
+          "items":
+            "type": "string"
+            "example":
+              - "dare"
+              - "dear"
+          "example":
+            - "dare"
+            - "dear"
+"paths":
+  "/version":
+    "get":
+      "summary": "Return API version."
+      "description": ""
+      "responses":
+        "200":
+          "description": "Version information"
+          "content":
+            "application/json":
+              "example":
+                "version": "0.1.0"
+                "python_version": "3.9.0"
+              "schema":
+                "properties":
+                  "version":
+                    "description": "Simple anagram-API version number\n"
+                    "type": "string"
+                  "python_version":
+                    "description": "Python interpreter version, as returned by `sys.version`"
+                    "type": "string"
+      "tags":
+        - "version"
+      "security": []
+  "/swagger.json":
+    "get":
+      "summary": "Show machine-readable API documentation."
+      "description": "Swagger documentation of API endpoints."
+      "responses":
+        "200":
+          "description": "[OpenAPI](https://swagger.io/specification/) document describing the Simple angram service API in JSON format\n"
+      "tags":
+        - "swagger"
+      "security": []
+  "/anagrams/word":
+    "get":
+      "summary": "Takes a JSON array of English-language words and adds them to the corpus."
+      "description": "Returns a JSON array of English-language words that are anagrams of the word passed in the URL.\n"
+      "responses":
+        "200":
+          "description": "report access entry"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+                "properties":
+                  "anagrams":
+                    "type": "array"
+                    "nullable": true
+                    "minItems": 0
+                    "maxItems": 100
+                    "description": "array or anagrams"
+                    "items":
+                      "type": "string"
+                      "example":
+                        - "dare"
+                        - "dear"
+                    "example":
+                      - "dare"
+                      - "dear"
+        "404":
+          "description": "word not found in corpus"
+          "content":
+            "application/json":
+              "example":
+                "message": "Not found"
+                "error_code": "NotFound"
+      "parameters":
+        -
+          "name": "single_word"
+          "in": "path"
+          "schema":
+            "type": "string"
+          "required": true
+          "description": "English languate word"
+          "example": "dare"
+      "tags":
+        - "anagrams"
+      "security": []
+  "/words/word":
+    "delete":
+      "summary": "Delete a single word from the corpus."
+      "description": ""
+      "responses":
+        "204":
+          "description": "delete successful"
+          "content":
+            "application/json":
+              "schema":
+                "properties": {}
+        "404":
+          "description": "word not found in corpus"
+          "content":
+            "application/json":
+              "example":
+                "message": "Not found"
+                "error_code": "NotFound"
+      "parameters":
+        -
+          "name": "single_word"
+          "in": "path"
+          "schema":
+            "type": "string"
+          "required": true
+          "description": "English languate word"
+          "example": "dare"
+      "tags":
+        - "corpus"
+      "security": []
+  "/words":
+    "post":
+      "summary": "Add English-language words to the corpus."
+      "description": "Takes a JSON array of English-language words and adds them to the corpus."
+      "responses":
+        "201":
+          "description": "the newly created report access entry"
+          "content":
+            "application/json":
+              "schema":
+                "TODO": ""
+        "400":
+          "description": "bad request"
+          "content":
+            "application/json":
+              "example":
+                "message": "Input validation failed"
+                "error_code": "InputValidationFailed"
+      "requestBody":
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "properties":
+                "words":
+                  "type": "array"
+                  "nullable": true
+                  "description": "array or words"
+                  "items":
+                    "type": "string"
+                    "example":
+                      - "dare"
+                      - "dear"
+                  "example":
+                    - "dare"
+                    - "dear"
+      "tags":
+        - "corpus"
+      "security": []
+    "delete":
+      "summary": "Delete all words in the corpus."
+      "description": ""
+      "responses":
+        "200":
+          "description": "delete successful"
+          "content":
+            "application/json":
+              "schema":
+                "properties": {}
+        "404":
+          "description": "word not found in corpus"
+          "content":
+            "application/json":
+              "example":
+                "message": "Not found"
+                "error_code": "NotFound"
+      "tags":
+        - "corpus"
+      "security": []
