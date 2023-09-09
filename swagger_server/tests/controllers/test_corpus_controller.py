@@ -13,6 +13,7 @@ def test_words_delete(client):
     response = client.delete('/api/v1/words')
     assert response.status_code == 204
 
+
 def test_words_post(client):
     """Test case for words_post hollow
 
@@ -25,6 +26,21 @@ def test_words_post(client):
         content_type='application/json')
     assert response.status_code == 200
     assert response.json == {}
+
+
+def test_words_post_single(client):
+    """Test case for words_post single word
+
+    Add English-language word to the corpus.
+    """
+    body = WordList(['dare'])
+    response = client.post(
+        '/api/v1/words',
+        data=json.dumps(body),
+        content_type='application/json')
+    assert response.status_code == 200
+    assert response.json == {}
+
 
 def test_words_word_delete(client):
     """Test case for words_word_delete hollow
