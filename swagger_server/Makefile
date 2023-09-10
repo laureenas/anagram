@@ -36,7 +36,7 @@ run: environ
 
 .PHONY: test
 test: environ
-	$(PYTEST) test
+	$(PYTEST) tests
 
 .PHONY: clean
 clean:
