@@ -72,7 +72,7 @@ paths:
                 error_code: NotFound
       security: []
       x-openapi-router-controller: controllers.anagrams_controller
-  /words/word:
+  /words/{word}:
     delete:
       tags:
       - corpus
@@ -80,7 +80,7 @@ paths:
       description: ""
       operationId: words_word_delete
       parameters:
-      - name: single_word
+      - name: word
         in: path
         description: English languate word
         required: true
@@ -143,7 +143,7 @@ paths:
       description: ""
       operationId: words_delete
       responses:
-        "200":
+        "204":
           description: delete successful
           content:
             application/json:
