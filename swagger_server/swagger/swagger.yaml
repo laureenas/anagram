@@ -42,7 +42,7 @@ paths:
     get:
       tags:
       - anagrams
-      summary: Takes a JSON array of English-language words and adds them to the corpus.
+      summary: Returns anagrams for English-language word in corpus.
       description: |
         Returns a JSON array of English-language words that are anagrams of the word passed in the URL.
       operationId: anagrams_word_get
