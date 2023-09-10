@@ -1,9 +1,9 @@
 import pytest
 
-from application import create_application
+from application import create_application, db
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='function')
 def app():
     '''Set the Testing configuration prior to creating the Flask application'''
 
@@ -15,8 +15,12 @@ def app():
     })
     yield flask_app
 
+    # Clean up DB after each test
+    with flask_app.app_context():
+        db.drop_all()
 
-@pytest.fixture(scope='module')
+
+@pytest.fixture(scope='function')
 def client(app):
     '''A client for executing calls'''
     with app.test_client() as test_client:
