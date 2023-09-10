@@ -41,6 +41,7 @@ test: environ
 .PHONY: clean
 clean:
 	rm -rf $(ENV)
+	rm -rf ${DBDIR}/
 	${MAKE} clean-pycache
 
 .PHONY: clean-pycache
