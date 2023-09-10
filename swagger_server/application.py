@@ -25,19 +25,22 @@ def create_application():
     # Configure the Flask application
     config_type = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
     app.app.config.from_object(config_type)
+    app.app.logger.info(f'Reading config {config_type} done...')
 
     # Initialize DB
     db.init_app(app.app)
     # Check if the DB schema needs to be initialized
+    from models.corpus import Corpus
+
     engine = sa.create_engine(app.app.config['SQLALCHEMY_DATABASE_URI'])
     inspector = sa.inspect(engine)
-    if not inspector.has_table("words"):
+    if not inspector.has_table("corpus"):
         with app.app.app_context():
             db.drop_all()
             db.create_all()
-            app.app.logger.info('Initialized the database!')
+            app.app.logger.info('Database initialization done...')
     else:
-        app.app.logger.info('Database already contains the users table.')
+        app.app.logger.info('Database already initialized - skipping initialization')
 
     return app
 
