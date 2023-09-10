@@ -49,7 +49,7 @@ def test_words_post_single(client):
 
 
 def test_words_delete(client):
-    """Test case for words_delete hollow
+    """Test case for delete all words
 
     Delete all words in the corpus.
     """
@@ -64,9 +64,25 @@ def test_words_delete(client):
 
 
 def test_words_word_delete(client):
-    """Test case for words_word_delete hollow
+    """Test for deleting a single word from a corpus"""
+    corpus_add_word('dear')
+    corpus_add_word('read')
 
-    Delete a single word from the corpus.
+    response = client.delete('/api/v1/words/dear')
+
+    assert response.status_code == 204
+    assert corpus_has_word('read')
+    assert not corpus_has_word('dare')
+
+
+def test_words_word_delete_hollow(client):
+    """Test for deleting without a positional argument
     """
-    response = client.delete('/api/v1/words/{}')
+    response = client.delete('/api/v1/words/')
+    assert response.status_code == 404
+
+
+def test_words_word_delete_non_existent(client):
+    """Test for deleting a non-existing word"""
+    response = client.delete('/api/v1/words/nonsuch')
     assert response.status_code == 404

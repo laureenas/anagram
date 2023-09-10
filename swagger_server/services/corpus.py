@@ -50,3 +50,15 @@ def corpus_delete_all():
     db.session.commit()
 
     return result
+
+
+def corpus_delete_word(word):
+    corpus = db.metadata.tables['corpus']
+    query = (
+        sa.delete(corpus).
+        where(corpus.c.word == word)
+    )
+    result = db.session.execute(query)
+    db.session.commit()
+
+    return result

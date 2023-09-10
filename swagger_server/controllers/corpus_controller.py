@@ -1,6 +1,11 @@
 import connexion
 
-from services.corpus import corpus_add_word, corpus_has_word, corpus_delete_all
+from services.corpus import (
+    corpus_add_word,
+    corpus_delete_all,
+    corpus_delete_word,
+    corpus_has_word,
+)
 
 
 def words_delete():
@@ -59,7 +64,16 @@ def words_word_delete(word):
 
     :rtype: Object
     """
-    return {
-        "message": "Not found",
-        "error_code": "NotFound"
-    }, 404
+    app = connexion.apps.flask_app
+    if not corpus_has_word(word):
+        app.logger.info(f'Requested to delete a non-existent  word: {word}')
+        return {
+            "message": "Not found",
+            "error_code": "NotFound"
+        }, 404
+
+    corpus_delete_word(word)
+    app.logger.info(f'Corpus deleted word: {word}')
+
+    return {}, 204
+
