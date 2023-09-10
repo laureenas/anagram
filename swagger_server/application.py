@@ -5,7 +5,6 @@ import os
 import connexion
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
-
 from encoder import JSONEncoder
 
 
