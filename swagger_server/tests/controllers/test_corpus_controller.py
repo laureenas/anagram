@@ -3,6 +3,7 @@
 from flask import json
 
 from models.word_list import WordList
+from services.corpus import corpus_add_word, corpus_has_word
 
 
 def test_words_post_empty(client):
@@ -52,8 +53,14 @@ def test_words_delete(client):
 
     Delete all words in the corpus.
     """
+    corpus_add_word('dare')
+    corpus_add_word('read')
+
     response = client.delete('/api/v1/words')
+
     assert response.status_code == 204
+    assert not corpus_has_word('dare')
+    assert not corpus_has_word('read')
 
 
 def test_words_word_delete(client):

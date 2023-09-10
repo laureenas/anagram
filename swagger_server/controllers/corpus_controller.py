@@ -1,6 +1,6 @@
 import connexion
 
-from services.corpus import corpus_add_word, corpus_has_word
+from services.corpus import corpus_add_word, corpus_has_word, corpus_delete_all
 
 
 def words_delete():
@@ -8,6 +8,10 @@ def words_delete():
 
     :rtype: Object
     """
+    app = connexion.apps.flask_app
+    corpus_delete_all()
+    app.logger.info('Corpus cleared...')
+
     return {}, 204
 
 

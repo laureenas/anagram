@@ -39,3 +39,14 @@ def corpus_add_word(word):
     db.session.commit()
 
     return word
+
+
+def corpus_delete_all():
+    corpus = db.metadata.tables['corpus']
+    query = (
+        sa.delete(corpus)
+    )
+    result = db.session.execute(query)
+    db.session.commit()
+
+    return result
