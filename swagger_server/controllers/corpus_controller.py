@@ -1,8 +1,6 @@
 import connexion
-import six
 
-import util
-from models.word_list import WordList
+from services.corpus import corpus_add_word, corpus_has_word
 
 
 def words_delete():
@@ -23,9 +21,30 @@ def words_post(body=None):
 
     :rtype: Object
     """
-    if connexion.request.is_json:
-        body = WordList.from_dict(connexion.request.get_json())
-    return {}, 200
+    app = connexion.apps.flask_app
+
+    body = connexion.request.get_json()
+
+    words = body.get('words', [])
+
+    # local cache of corpus words by length
+    added = []
+
+    for word in words:
+
+        if corpus_has_word(word):
+            app.logger.info(f'Word already exists in corpus: {word}')
+            # Add word to the corpus
+            continue
+        else:
+            corpus_add_word(word)
+            added.append(word)
+            app.logger.info(f'Word added to corpus: {word}')
+
+    if added:
+        return {}, 201
+    else:
+        return {}, 200
 
 
 def words_word_delete(word):
