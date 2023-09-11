@@ -70,12 +70,38 @@ def test_words_word_delete(client, word):
 
 
 def test_words_word_delete_hollow(client):
-    """Test for deleting without a positional argument"""
+    """Test for deleting without a positional argument."""
     response = client.delete('/api/v1/words/')
     assert response.status_code == 404
 
 
 def test_words_word_delete_non_existent(client):
-    """Test for deleting a non-existing word"""
+    """Test for deleting a non-existing word."""
     response = client.delete('/api/v1/words/nonsuch')
     assert response.status_code == 404
+
+
+@pytest.mark.skip(reason='Ingesting ~235k English words takes ~25 minutes')
+def test_words_post_load(client):
+    """Test loading all words in English language."""
+    BATCH_SIZE = 1000
+    BATCH_COUNT = 10
+
+    with open('../homework_task/dictionary.txt', 'r') as dictionary:
+        lines = dictionary.readlines()
+    words_en = [word.strip() for word in lines]
+
+    for start in range(0, len(words_en), BATCH_SIZE):
+        batch = words_en[start: start + BATCH_SIZE]
+
+        body = {'words': batch}
+        response = client.post(
+            '/api/v1/words',
+            data=json.dumps(body),
+            content_type='application/json')
+        assert response.status_code == 201
+        assert response.json == {}
+
+        # NB: pytest does not expose stdout until a test completed and if so
+        # only in the case when the test failed
+        print(f'Batch {start}:{start + BATCH_SIZE} processed...')
