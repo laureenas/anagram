@@ -47,6 +47,9 @@ def get_letter_map(word):
     if word is None:
         return None
 
+    # Assumption: anagrams are not case-sensitive
+    word = word.lower()
+
     letter_map = [0]*LETTER_COUNT_EN
     for letter in word:
         if letter not in LETTER_IDX_EN:

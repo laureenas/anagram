@@ -28,7 +28,6 @@ def anagrams_word_get(word):
     else:
         app.logger.info(f'Word not found in corpus: {word}')
 
-
     result = {'anagrams': anagrams}
 
     return result, 200

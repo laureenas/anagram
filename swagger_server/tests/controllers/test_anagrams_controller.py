@@ -27,14 +27,15 @@ def test_anagrams_word_get_not_found(client):
     assert response.json == {'anagrams': []}
 
 
-def test_anagrams_word_get(client):
+@pytest.mark.parametrize('word', ('dear', 'Dear', 'DeaR'))
+def test_anagrams_word_get(client, word):
     """Test case for anagrams_word_get
 
     Takes a JSON array of English-language words and adds them to the corpus.
     """
     corpus_add_word('read')
 
-    response = client.get('/api/v1/anagrams/dare')
+    response = client.get(f'/api/v1/anagrams/{word}')
     assert response.json == {"anagrams": ["read"]}
 
 

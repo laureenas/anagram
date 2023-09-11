@@ -1,4 +1,5 @@
 # coding: utf-8
+import pytest
 
 from flask import json
 
@@ -20,12 +21,16 @@ def test_words_post_empty(client):
     assert response.json == {}
 
 
-def test_words_post(client):
+@pytest.mark.parametrize('words', [
+    ['read', 'dear', 'dare'],
+    ['Read', 'dEAr', 'darE']
+])
+def test_words_post(client, words):
     """Test case for words_post hollow
 
     Add English-language words to the corpus.
     """
-    body = {"words": ["read", "dear", "dare"]}
+    body = {'words': words}
     response = client.post(
         '/api/v1/words',
         data=json.dumps(body),
@@ -34,12 +39,13 @@ def test_words_post(client):
     assert response.json == {}
 
 
-def test_words_post_single(client):
+@pytest.mark.parametrize('word', ('dear', 'Dear', 'DeaR'))
+def test_words_post_single(client, word):
     """Test case for words_post single word
 
     Add English-language word to the corpus.
     """
-    body = WordList(['dare'])
+    body = WordList([word])
     response = client.post(
         '/api/v1/words',
         data=json.dumps(body),
@@ -63,12 +69,13 @@ def test_words_delete(client):
     assert not corpus_has_word('read')
 
 
-def test_words_word_delete(client):
+@pytest.mark.parametrize('word', ('dear', 'Dear', 'DeaR'))
+def test_words_word_delete(client, word):
     """Test for deleting a single word from a corpus"""
     corpus_add_word('dear')
     corpus_add_word('read')
 
-    response = client.delete('/api/v1/words/dear')
+    response = client.delete(f'/api/v1/words/{word}')
 
     assert response.status_code == 204
     assert corpus_has_word('read')

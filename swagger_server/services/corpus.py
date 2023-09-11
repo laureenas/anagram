@@ -54,6 +54,7 @@ def corpus_delete_all():
 
 def corpus_delete_word(word):
     corpus = db.metadata.tables['corpus']
+
     query = (
         sa.delete(corpus).
         where(corpus.c.word == word)

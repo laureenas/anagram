@@ -65,6 +65,10 @@ def words_word_delete(word):
     :rtype: Object
     """
     app = connexion.apps.flask_app
+
+    # Assumption: anagrams are not case-sensitive
+    word = word.lower()
+
     if not corpus_has_word(word):
         app.logger.info(f'Requested to delete a non-existent  word: {word}')
         return {
