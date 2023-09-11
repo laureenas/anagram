@@ -5,7 +5,7 @@ import os
 import connexion
 import sqlalchemy as sa
 from flask_sqlalchemy import SQLAlchemy
-from encoder import JSONEncoder
+from connexion.apps.flask_app import FlaskJSONEncoder
 
 
 db = SQLAlchemy()
@@ -15,7 +15,7 @@ def create_application():
     app = connexion.App(__name__, specification_dir='./swagger/')
 
     # This seems to be needed by connexion
-    app.app.json_encoder = JSONEncoder
+    app.app.json_encoder = FlaskJSONEncoder
 
     # Enable API 'mode' of connexion
     app.add_api('swagger.yaml', arguments={'title': 'Simple Anagram API'},

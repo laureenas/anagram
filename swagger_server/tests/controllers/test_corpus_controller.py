@@ -3,7 +3,6 @@ import pytest
 
 from flask import json
 
-from models.word_list import WordList
 from services.corpus import corpus_add_word, corpus_has_word
 
 
@@ -12,7 +11,7 @@ def test_words_post_empty(client):
 
     Add English-language words to the corpus.
     """
-    body = WordList()
+    body = {'words': []}
     response = client.post(
         '/api/v1/words',
         data=json.dumps(body),
@@ -30,7 +29,7 @@ def test_words_post(client, words):
 
     Add English-language words to the corpus.
     """
-    body = {'words': words}
+    body = {'words': ['read', 'dear', 'dare']}
     response = client.post(
         '/api/v1/words',
         data=json.dumps(body),
@@ -45,7 +44,7 @@ def test_words_post_single(client, word):
 
     Add English-language word to the corpus.
     """
-    body = WordList([word])
+    body = {'words': [word]}
     response = client.post(
         '/api/v1/words',
         data=json.dumps(body),
@@ -83,8 +82,7 @@ def test_words_word_delete(client, word):
 
 
 def test_words_word_delete_hollow(client):
-    """Test for deleting without a positional argument
-    """
+    """Test for deleting without a positional argument"""
     response = client.delete('/api/v1/words/')
     assert response.status_code == 404
 
