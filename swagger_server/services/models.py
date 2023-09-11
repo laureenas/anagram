@@ -25,6 +25,7 @@ LETTER_IDX_EN = {
     'x': 23,
     'y': 24,
     'z': 25,
+    '-': 26,  # 'Jean-Christophe' is apparently an English word
 }
 LETTER_COUNT_EN = len(LETTER_IDX_EN)
 
