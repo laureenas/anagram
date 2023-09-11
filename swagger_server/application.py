@@ -43,8 +43,9 @@ def create_application():
 
     return app
 
+
 def run_application():
-    '''Run application in dev mode. No WSGT.'''
+    '''Run application in dev mode. No WSGI.'''
     app = create_application()
     app.run(port=8080)
 

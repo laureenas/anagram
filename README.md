@@ -21,14 +21,14 @@ cd swagger_server && make run
 
 Adding words to the corpus
 ```
-$ curl -i -X POST -d '{ "words": ["read", "dear", "dare"] }' http://localhost:8080/words
+$ curl -i -X POST -H 'Content-Type: application/json' -d '{ "words": ["read", "dear", "dare"] }' http://localhost:8080/api/v1/words
 HTTP/1.1 201 Created
 ...
 ```
 
 Fetching anagrams
 ```
-$ curl -i http://localhost:8080/anagrams/read
+$ curl -i http://localhost:8080/api/v1/anagrams/read
 HTTP/1.1 200 OK
 ...
 {
@@ -41,14 +41,14 @@ HTTP/1.1 200 OK
 
 Delete single word
 ```
-$ curl -i -X DELETE http://localhost:8080/words/read
+$ curl -i -X DELETE http://localhost:8080/api/v1/words/read
 HTTP/1.1 204 No Content
 ...
 ```
 
-#### Delete all words
+Delete all words
 ```
-$ curl -i -X DELETE http://localhost:8080/words
+$ curl -i -X DELETE http://localhost:8080/api/v1/words
 HTTP/1.1 204 No Content
 ```
 
