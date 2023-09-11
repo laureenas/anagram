@@ -25,19 +25,6 @@ paths:
                 python_version: '3.9.0 '
       security: []
       x-openapi-router-controller: controllers.version_controller
-  /swagger.json:
-    get:
-      tags:
-      - swagger
-      summary: Show machine-readable API documentation.
-      description: Swagger documentation of API endpoints.
-      operationId: swagger_json_get
-      responses:
-        "200":
-          description: |
-            [OpenAPI](https://swagger.io/specification/) document describing the Simple angram service API in JSON format
-      security: []
-      x-openapi-router-controller: controllers.swagger_controller
   /anagrams/{word}:
     get:
       tags:
