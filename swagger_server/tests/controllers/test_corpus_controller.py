@@ -7,10 +7,7 @@ from services.corpus import corpus_add_word, corpus_has_word
 
 
 def test_words_post_empty(client):
-    """Test case for words_post hollow
-
-    Add English-language words to the corpus.
-    """
+    """Test words_post without words."""
     body = {'words': []}
     response = client.post(
         '/api/v1/words',
@@ -25,10 +22,7 @@ def test_words_post_empty(client):
     ['Read', 'dEAr', 'darE']
 ])
 def test_words_post(client, words):
-    """Test case for words_post hollow
-
-    Add English-language words to the corpus.
-    """
+    """Test add English-language words to the corpus."""
     body = {'words': ['read', 'dear', 'dare']}
     response = client.post(
         '/api/v1/words',
@@ -40,10 +34,7 @@ def test_words_post(client, words):
 
 @pytest.mark.parametrize('word', ('dear', 'Dear', 'DeaR'))
 def test_words_post_single(client, word):
-    """Test case for words_post single word
-
-    Add English-language word to the corpus.
-    """
+    """Test case for post words with a single word."""
     body = {'words': [word]}
     response = client.post(
         '/api/v1/words',
@@ -54,10 +45,7 @@ def test_words_post_single(client, word):
 
 
 def test_words_delete(client):
-    """Test case for delete all words
-
-    Delete all words in the corpus.
-    """
+    """Test case for delete all words."""
     corpus_add_word('dare')
     corpus_add_word('read')
 
@@ -70,7 +58,7 @@ def test_words_delete(client):
 
 @pytest.mark.parametrize('word', ('dear', 'Dear', 'DeaR'))
 def test_words_word_delete(client, word):
-    """Test for deleting a single word from a corpus"""
+    """Test for deleting a single word from a corpus."""
     corpus_add_word('dear')
     corpus_add_word('read')
 
