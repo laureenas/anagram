@@ -13,7 +13,7 @@ environ: $(PYBIN)/$(PYTHON) $(ENV)/.done
 .PHONY: help
 help:
 	@echo "make                  # build everything"
-	@echo "make test             # TODO: run tests"
+	@echo "make test             # run tests"
 	@echo "make flake8           # TODO: run flake8 linter"
 	@echo "make run              # run API"
 	@echo "make clean            # clean API and databases"
