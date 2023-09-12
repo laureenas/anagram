@@ -32,7 +32,7 @@ $(ENV)/.done: $(PIP) setup.py requirements-dev.txt
 
 .PHONY: run
 run: environ
-	$(PYBIN)/$(PYTHON) application.py
+	$(PYBIN)/$(PYTHON) __main__.py
 
 .PHONY: test
 test: environ

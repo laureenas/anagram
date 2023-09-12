@@ -43,11 +43,5 @@ def create_application():
     else:
         flask_app.logger.info('Database already initialized - skipping initialization')
 
-def run_application():
-    '''Run application in dev mode. No WSGI.'''
-    app = create_application()
-    app.run(port=8080)
+    return connexion_app
 
-
-if __name__ == '__main__':
-    run_application()
