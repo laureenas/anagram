@@ -55,7 +55,7 @@ HTTP/1.1 204 No Content
 
 ### UI
 
-You can open your browser to here to review Swagger (NB: this was not tested):
+You can open your browser to here to review Swagger and execute sample calls:
 
 ```
 http://localhost:8080/api/v1/ui/
@@ -82,6 +82,8 @@ cd swagger_server && make test
 ## Performance
 
 Ingesting ~235k English words from homework_task/dictionary.txt takes ~25 minutes.
+
+Finding anagrams for word in ~235k corpus takes <100ms.
 
 
 ## TODOs:
