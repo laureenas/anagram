@@ -150,6 +150,47 @@ paths:
                 error_code: NotFound
       security: []
       x-openapi-router-controller: controllers.corpus_controller
+  /words/statistics:
+    get:
+      tags:
+      - corpus
+      summary: Provide statistics for the corpus.
+      description: |
+        Returns a JSON with statistics for the corpus.
+      operationId: words_statistics_get
+      responses:
+        "200":
+          description: statistics for the corpus
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  min:
+                    type: string
+                    description: minum lengh of a word
+                    example: "1"
+                  max:
+                    type: string
+                    description: maximum lengh of a word
+                    example: "15"
+                  average:
+                    type: string
+                    description: average word length in the corpus
+                    example: "8.0"
+                  count:
+                    type: string
+                    description: count of words in the corpus
+                    example: "235000"
+                example:
+                  {
+                    "min": "1",
+                    "max": "15",
+                    "average": "8",
+                    "count": "235000"
+                  }
+      security: []
+      x-openapi-router-controller: controllers.corpus_controller
 components:
   schemas:
     anagram_list:

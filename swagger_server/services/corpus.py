@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+from sqlalchemy.sql import func
 
 from application import db
 from services.models import get_letter_map
@@ -63,3 +64,43 @@ def corpus_delete_word(word):
     db.session.commit()
 
     return result
+
+
+def words_statistics():
+    corpus = db.metadata.tables['corpus']
+
+    query_min = (
+        sa.select(func.min(corpus.c.word_length).label('min')).
+        select_from(corpus)
+    )
+    query_max = (
+        sa.select(func.max(corpus.c.word_length).label('max')).
+        select_from(corpus)
+    )
+    query_count = (
+        sa.select(func.count(corpus.c.word_length).label('count')).
+        select_from(corpus)
+    )
+
+    min_ = max_ = average = None
+    result_min = db.session.execute(query_min)
+    for row in result_min:
+        min_ = row[0]
+    result_max = db.session.execute(query_max)
+    for row in result_max:
+        max_ = row[0]
+    result_count = db.session.execute(query_count)
+    for row in result_count:
+        count = row[0]
+
+    if min_ is not None and max_ is not None:
+        average = (min_ + max_) / 2
+    else:
+        average = None
+
+    return {
+        'min': min_,
+        'max': max_,
+        'average': average,
+        'count': count,
+    }

@@ -5,6 +5,7 @@ from services.corpus import (
     corpus_delete_all,
     corpus_delete_word,
     corpus_has_word,
+    words_statistics,
 )
 
 
@@ -81,3 +82,17 @@ def words_word_delete(word):
 
     return {}, 204
 
+
+def words_statistics_get():
+    """Provides statistics for the corpus."""
+
+    stats = words_statistics()
+
+    result = {
+        'min': str(stats['min']),
+        'max': str(stats['max']),
+        'average': str(stats['average']),
+        'count': str(stats['count'])
+    }
+
+    return result, 200

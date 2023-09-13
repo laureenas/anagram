@@ -105,3 +105,17 @@ def test_words_post_load(client):
         # NB: pytest does not expose stdout until a test completed and if so
         # only in the case when the test failed
         print(f'Batch {start}:{start + BATCH_SIZE} processed...')
+
+
+def test_words_statistics_get(client):
+    """Test case for corpus statistics"""
+    corpus_add_word('read')
+    corpus_add_word('zymophosphate')
+
+    response = client.get(f'/api/v1/words/statistics')
+    assert response.json == {
+        'average': '8.5',
+        'max': '13',
+        'min': '4',
+        'count': '2'
+    }
