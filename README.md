@@ -90,19 +90,17 @@ Finding anagrams for word in ~235k corpus takes <100ms.
 
 ### Knowwn bugs
 - Add flake8 Make target and clean up PEP-8.
-- Review configs: Use testing config instead of dev conig for tests.
-- Make version controller return actual GIT version.
+- Review configs: Use dev/testing/production config appropriatly.
 
 ### Immediate TODOs:
 
-- Review Swagger UI for functionality.
 - Refactor weird auto-generated Swagger schema `inline_response_200`
 - Add column `corpus.word.is_proper_nount` for proper nount statistics endpoint.
 
 ### Nice to haves:
 
-- Switch from python's builtin web server to UWSGI.
+- Switch from python's builtin web server to UWSGI (part of configuration?).
 - Start using requirements.in and requirements-dev.in.
 - Review errors - maybe not rely on connextion validation?
+  CI/CD.
 - Add Alembic DB schema migration.
-
