@@ -197,7 +197,6 @@ components:
       type: object
       properties:
         anagrams:
-          maxItems: 100
           minItems: 0
           type: array
           description: array or anagrams
@@ -207,7 +206,6 @@ components:
           - dear
           items:
             type: string
-            example: "[\"dare\",\"dear\"]"
       example:
         anagrams:
         - dare
@@ -224,42 +222,6 @@ components:
           - dear
           items:
             type: string
-            example: "[\"dare\",\"dear\"]"
-    inline_response_200:
-      properties:
-        version:
-          type: string
-          description: |
-            Simple anagram-API version number
-        python_version:
-          type: string
-          description: "Python interpreter version, as returned by `sys.version`"
-      example:
-        python_version: python_version
-        version: version
-  responses:
-    bad_request:
-      description: bad request
-      content:
-        application/json:
-          example:
-            message: Input validation failed
-            error_code: InputValidationFailed
-    not_found:
-      description: word not found in corpus
-      content:
-        application/json:
-          example:
-            message: Not found
-            error_code: NotFound
-    delete_successful:
-      description: delete successful
-      content:
-        application/json:
-          schema:
-            properties: {}
-            example: {}
-            x-content-type: application/json
   parameters:
     word:
       name: word
