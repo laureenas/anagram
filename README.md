@@ -5,11 +5,11 @@ The anagram application POC (ProveOfConcept) is able to provide anagrams for a g
 
 The application is based on `connextion` wrapper over Flask framework. Persistent SQLite wrapped with SQLAlchemy is used for storage which should be enough for the POC scope. Date model is based on anagram map: letters in each word are counted and their count is noted in a letter 'map' (see swagger_server/services/models.py).
 
-Full disclosure: The initial application boilerplate was generated in Swagger-frist manner. Swagger definitions were created in swagger.io SAAS and auto-generated boilerplate was exported (hence the name `swagger_server` of the server root folder). This was to experiment with Swagger-definition-first toolings out there. This turned out to be not a very productive choice, however. Generated server boilerplate was trimmed, mangled, and augmented. The original boilerplate can bee found under `/homework_task/boilerplate_generation/python-flask-server-generated.zip`. Detailed list of changes to the boilerplate presented in commit 3f71d686c7d8a60e3cf1b84b084660940946a762. In the end, the `connextion` wrapper was used only for input/output validation based on definitions in swagger/swagger.yaml and for the Swagger UI that comes for free.
+Full disclosure: The initial application boilerplate was generated in Swagger-frist manner. Swagger definitions were created in [swagger.io](https://editor-next.swagger.io/) SAAS and auto-generated boilerplat e was exported (hence the name `swagger_server` of the server root folder). This was to experiment with Swagger-definition-first toolings out there. This turned out to be not a very productive choice, however. Generated server boilerplate was trimmed, mangled, and augmented. The original boilerplate can bee found under `/homework_task/boilerplate_generation/python-flask-server-generated.zip`. Detailed list of changes to the boilerplate presented in this [commit](https://github.com/laureenas/anagram/commit/3f71d686c7d8a60e3cf1b84b084660940946a762). In the end, the `connextion` wrapper was used only for input/output validation based on definitions in swagger/swagger.yaml and for the Swagger UI that comes for free.
 
 
 ## Requirements
-Make, virtualenv, python (tested on v 3.10).
+`Make`, `virtualenv`, `python3` (tested on v 3.10).
 
 ## Usage
 To run the server, please execute the following from the root directory:
@@ -71,7 +71,7 @@ docker build -t swagger_server .
 
 # starting up a container
 docker run -p 8080:8080 swagger_server
-``**
+```
 
 ## Testing
 
@@ -88,13 +88,12 @@ Finding anagrams for word in ~235k corpus takes <100ms.
 
 ## TODOs:
 
-### Knowwn bugs
+### Known bugs
 - Add flake8 Make target and clean up PEP-8.
 - Review configs: Use dev/testing/production config appropriatly.
 
 ### Immediate TODOs:
 
-- Refactor weird auto-generated Swagger schema `inline_response_200`
 - Add column `corpus.word.is_proper_nount` for proper nount statistics endpoint.
 
 ### Nice to haves:
