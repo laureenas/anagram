@@ -19,10 +19,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
-              example:
-                version: 0.1.0
-                python_version: '3.9.0 '
+                properties:
+                  version:
+                    type: string
+                    description: |
+                      Simple anagram-API version number
+                example:
+                  version: 0.1.0
       security: []
       x-openapi-router-controller: controllers.version_controller
   /anagrams/{word}:

@@ -7,4 +7,4 @@ def test_version_get(client):
     """
     response = client.get('/api/v1/version')
     assert response.status_code == 200
-    assert response.json == {}
+    assert response.json == {'version': '0.1.0'}

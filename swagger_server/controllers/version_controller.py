@@ -1,7 +1,5 @@
 
 def version_get():
-    """Return API version.
+    """Return API version."""
 
-    :rtype: InlineResponse200
-    """
-    return {}
+    return {'version': '0.1.0'}, 200
